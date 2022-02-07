@@ -23,7 +23,7 @@ dataset_url = f'{dataset_base_url}/{dataset_file}'
 path_to_local_home = os.environ.get("AIRFLOW_HOME", "/opt/airflow/")
 
 dataset_output_file = 'fhv_tripdata_output_{{execution_date.strftime(\'%Y-%m\')}}.csv'
-parquet_file = dataset_file.replace('.csv', '.parquet')
+parquet_file = dataset_output_file.replace('.csv', '.parquet')
 
 
 
