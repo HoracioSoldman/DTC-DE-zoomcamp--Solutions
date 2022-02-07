@@ -1,0 +1,5 @@
+__pycache__
+
+week-2/logs/*
+
+.env
