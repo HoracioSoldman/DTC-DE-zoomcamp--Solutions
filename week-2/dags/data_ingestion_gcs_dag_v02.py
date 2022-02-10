@@ -69,9 +69,9 @@ default_args = {
 
 # NOTE: DAG declaration - using a Context Manager (an implicit way)
 with DAG(
-    dag_id="data_ingestion_gcs_dag_v02",
+    dag_id="data_ingestion_gcs_dag_v04",
     description="""
-        This dag retrieves monthly NY Yellow taxi data from January 2019 to December 2020.
+        This dag retrieves monthly NY yellow taxi data from January 2019 to December 2020.
     """, 
     schedule_interval="0 8 1 * *",
     default_args=default_args,
@@ -100,7 +100,7 @@ with DAG(
         python_callable=upload_to_gcs,
         op_kwargs={
             "bucket": BUCKET,
-            "object_name": f"raw/{parquet_file}",
+            "object_name": f"raw/taxi/{parquet_file}",
             "local_file": f"{path_to_local_home}/{parquet_file}",
         },
     )
