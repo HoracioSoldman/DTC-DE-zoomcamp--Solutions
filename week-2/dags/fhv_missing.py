@@ -18,11 +18,11 @@ BUCKET = os.environ.get("GCP_GCS_BUCKET")
 BIGQUERY_DATASET = os.environ.get("BIGQUERY_DATASET", 'trips_data_all')
 
 dataset_base_url = 'https://nyc-tlc.s3.amazonaws.com/trip+data'
-dataset_file = 'fhv_tripdata_{{execution_date.strftime(\'%Y-%m\')}}.csv'
+dataset_file = 'fhv_tripdata_2019-01.csv'
 dataset_url = f'{dataset_base_url}/{dataset_file}'
 path_to_local_home = os.environ.get("AIRFLOW_HOME", "/opt/airflow/")
 
-dataset_output_file = 'fhv_tripdata_output_{{execution_date.strftime(\'%Y-%m\')}}.csv'
+dataset_output_file = 'fhv_tripdata_output_2019-01.csv'
 parquet_file = dataset_output_file.replace('.csv', '.parquet')
 
 
@@ -62,23 +62,22 @@ def upload_to_gcs(bucket, object_name, local_file):
 
 default_args = {
     "owner": "airflow",
-    "start_date": datetime(2019, 1, 1),
-    "end_date": datetime(2020, 1, 1),
+    "start_date": days_ago(0),
     "depends_on_past": False,
     "retries": 1,
 }
 
 # NOTE: DAG declaration - using a Context Manager (an implicit way)
 with DAG(
-    dag_id="fhv_data_ingestion_gcs_dag_v01",
+    dag_id="fhv_another_missing",
     description="""
-        This dag retrieves monthly For-Hire Vehicle (FHV) Trip Records in 2019.
+        This dag retrieves a single missing file.
     """, 
-    schedule_interval="0 8 2 * *",
+    schedule_interval="@once",
     default_args=default_args,
-    catchup=True,
+    catchup=False,
     max_active_runs=3,
-    tags=['dtc-de', 'fhv-data', '2019'],
+    tags=['dtc-de', 'fhv-data', '2019', 'missing'],
 ) as dag:
 
     download_dataset_task = BashOperator(
