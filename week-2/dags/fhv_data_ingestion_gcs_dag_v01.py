@@ -74,7 +74,7 @@ with DAG(
     description="""
         This dag retrieves monthly For-Hire Vehicle (FHV) Trip Records in 2019.
     """, 
-    schedule_interval="0 8 2 * *",
+    schedule_interval="0 8 1 * *",
     default_args=default_args,
     catchup=True,
     max_active_runs=3,
