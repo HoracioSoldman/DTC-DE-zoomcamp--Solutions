@@ -1,0 +1,36 @@
+version: 2
+sources:
+    - name: staging
+      database: dtc-de-340319    
+      schema: fhv2019    
+
+      tables: 
+          - name: fhv2019_external_table_partitoned_clustered
+
+models:
+    - name: stg_fhv_data
+      description: >
+        This is 'For Hire Vehicles' in New York City.
+      columns:
+          - name: dispatching_base_num
+            description: Can probably be the identifier column.
+          - name: pickup_datetime 
+            description: The date and time when the meter was engaged.
+          - name: dropoff_datetime 
+            description: The date and time when the meter was disengaged.
+          - name: PULocationid
+            description: locationid where the meter was engaged.
+            tests:
+              - relationships:
+                  to: ref('taxi_zone_lookup')
+                  field: locationid
+                  severity: warn
+          - name: DOLocationid 
+            description: locationid where the meter was engaged.
+            tests:
+              - relationships:
+                  to: ref('taxi_zone_lookup')
+                  field: locationid
+                  severity: warn  
+          - name: SR_Flag
+            description: I dno't know that one either.
