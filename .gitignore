@@ -3,3 +3,6 @@ __pycache__
 week-2/logs/*
 
 .env
+
+week-5/notebook/data
+week-5/notebook/fhvhv_tripdata_2021-02.csv
